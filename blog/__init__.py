@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 # __init__.py - 2021年 十月 01日
 #
+import os
+
 import click
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
@@ -13,9 +15,11 @@ from flask_sqlalchemy import SQLAlchemy
 from blog.blueprints.admin import admin_bp
 from blog.blueprints.auth import auth_bp
 from blog.blueprints.blog import blog_bp
+from blog.settings import config
 
 app = Flask('blog')
-app.config.from_pyfile('settings.py')
+config_name = os.getenv('FLASK_CONFIG', 'development')
+app.config.from_object(config[config_name])
 
 bootstrap = Bootstrap(app)
 db = SQLAlchemy(app)

@@ -1,4 +1,7 @@
 {% from 'bootstrap/nav.html' import render_nav_item %}
+
+{% set theme = request.cookies.get('theme', 'Sketchy') %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,14 +11,23 @@
         <title>{% block title %}{% endblock title %} - {{ admin.blog_title|default('Blog Title') }}</title>
         <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
         {{ bootstrap.load_css() }}
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/perfect_blue.min.css') }}" type="text/css">
+        <link rel="stylesheet"
+              href="{{ url_for('static', filename='css/%s.min.css' % theme) }}"
+              type="text/css">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
     {% endblock head %}
 </head>
 <body>
 {# 导航栏 #}
 {% block nav %}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark
+        {% if theme in ['Minty', 'Superhero'] %}
+        bg-dark
+        {% else %}
+        bg-primary
+        {% endif %}
+            bg-primary
+        ">
         <div class="container">
             <a class="navbar-brand" href="{{ url_for('blog.index') }}">{{ admin.blog_title }}</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
@@ -23,10 +35,24 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarColor01">
-                <ul class="navbar-nav mr-auto">
+                <ul class="navbar-nav">
                     {# 导航栏链接 #}
-                    {{ render_nav_item('blog.index', 'Home') }}
-                    {{ render_nav_item('blog.about', 'About') }}
+                    {{ render_nav_item('blog.index', '主页') }}
+                    {{ render_nav_item('blog.about', '关于我') }}
+                    {# 切换主题 #}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            切换主题
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% for theme_name in config.BLOG_THEMES %}
+                                <a class="dropdown-item {% if theme == theme_name %}active{% endif %}"
+                                   href="{{ url_for('blog.change_theme', theme_name=theme_name, next=request.full_path) }}">
+                                    {{ theme_name }}</a>
+                            {% endfor %}
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>

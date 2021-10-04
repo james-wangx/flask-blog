@@ -10,7 +10,7 @@ from flask import Flask, render_template
 from blog.blueprints.admin import admin_bp
 from blog.blueprints.auth import auth_bp
 from blog.blueprints.blog import blog_bp
-from blog.extensions import bootstrap, db, ckeditor, mail, moment
+from blog.extensions import bootstrap, db, ckeditor, mail, moment, login_manager
 from blog.models import Admin, Category, Post, Comment, Link
 from blog.settings import config
 
@@ -39,6 +39,7 @@ def register_logging(app):
 def register_extensions(app):
     bootstrap.init_app(app)
     db.init_app(app)
+    # login_manager.init_app(app)
     ckeditor.init_app(app)
     mail.init_app(app)
     moment.init_app(app)

@@ -34,6 +34,7 @@ class BaseConfig:
 
 
 class DevelopmentConfig(BaseConfig):
+    DEBUG = True
     SQLALCHEMY_DATABASE_URI = prefix + os.path.join(basedir, 'data-dev.db')
 
 

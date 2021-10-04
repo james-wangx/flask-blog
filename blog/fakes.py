@@ -21,6 +21,7 @@ def fake_admin():
         name='Pineapple',
         about="Hi there, i'm Pineapple."
     )
+    admin.set_password('pineapple')
     db.session.add(admin)
     db.session.commit()
 

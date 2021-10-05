@@ -131,8 +131,8 @@
                 {% endif %}
             </div>
             {# 评论分页 #}
-            {% if comments %}
-                {{ render_pagination(pagination, fragment='#comments') }}
+            {% if pagination.pages > 1 %}
+                <div class="page-footer">{{ render_pagination(pagination) }}</div>
             {% endif %}
             {# 回复评论 #}
             {% if request.args.get('reply') %}

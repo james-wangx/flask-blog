@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 # forms.py - 2021年 十月 03日
 #
-from flask_ckeditor import CKEditorField
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, TextAreaField, HiddenField
 from wtforms.validators import DataRequired, Length, ValidationError, Email, Optional, URL
@@ -21,7 +20,7 @@ class SettingForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired(), Length(1, 70)])
     blog_title = StringField('Blog Title', validators=[DataRequired(), Length(1, 60)])
     blog_sub_title = StringField('Blog Sub Title', validators=[DataRequired(), Length(1, 100)])
-    about = CKEditorField('About Page', validators=[DataRequired()])
+    about = TextAreaField('About Page', validators=[DataRequired()])
     submit = SubmitField()
 
 

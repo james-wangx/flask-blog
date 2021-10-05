@@ -15,3 +15,15 @@ login_manager = LoginManager()
 ckeditor = CKEditor()
 mail = Mail()
 moment = Moment()
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    from blog.models import Admin
+    user = Admin.query.get(int(user_id))
+    return user
+
+
+login_manager.login_view = 'auth.login'
+login_manager.login_message = '请先登录！'
+login_manager.login_message_category = 'warning'

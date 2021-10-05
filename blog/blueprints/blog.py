@@ -3,6 +3,7 @@
 # blog.py - 2021年 十月 01日
 #
 from flask import render_template, Blueprint, request, current_app, url_for, flash, redirect, abort, make_response
+from flask_login import current_user
 
 from blog.emails import send_new_reply_email, send_new_comment_email
 from blog.extensions import db
@@ -11,10 +12,6 @@ from blog.models import Post, Comment, Category
 from blog.utils import redirect_back
 
 blog_bp = Blueprint('blog', __name__)
-
-
-class current_user:
-    is_authenticated = False
 
 
 @blog_bp.route('/')

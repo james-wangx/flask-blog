@@ -29,8 +29,8 @@ class BaseConfig:
 
     BLOG_EMAIL = os.getenv('BLOG_EMAIL')
     BLOG_POST_PER_PAGE = 10
-    BLOG_MANAGE_POST_PER_PAGE = 15
-    BLOG_COMMENT_PER_PAGE = 15
+    BLOG_MANAGE_POST_PER_PAGE = 10
+    BLOG_COMMENT_PER_PAGE = 10
     # Pulse: 列表是黑色的
     BLOG_THEMES = ['Lux', 'Slate', 'Minty', 'Litera', 'Darkly', 'Journal', 'Sketchy', 'Superhero']
 

@@ -2,11 +2,17 @@
 {% from 'bootstrap/form.html' import render_form %}
 {% from 'bootstrap/pagination.html' import render_pagination %}
 
+{% set theme = request.cookies.get('theme', 'Sketchy') %}
+
 {# 代码高亮 #}
 {% block head %}
     {{ super() }}
-{#    <link rel="stylesheet" href="{{ url_for('static', filename='css/pygments.css') }}">#}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/colorful.css') }}">
+    {# 配置代码主题 #}
+    {% if theme in ['Slate', 'Darkly', 'Superhero'] %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/stata-dark.css') }}">
+    {% else %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/manni.css') }}">
+    {% endif %}
 {% endblock %}
 
 {% block title %}{{ post.title }}{% endblock %}

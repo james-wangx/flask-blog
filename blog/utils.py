@@ -2,9 +2,11 @@
 # -*- coding: utf-8 -*-
 # utils.py - 2021年 十月 03日
 #
+import os
 from urllib.parse import urlparse, urljoin
 
 from flask import request, redirect, url_for
+from pygments.styles import get_all_styles
 
 
 def is_safe_url(target):
@@ -20,3 +22,13 @@ def redirect_back(default='blog.index', **kwargs):
         if is_safe_url(target):
             return redirect(target)
     return redirect(url_for(default, **kwargs))
+
+
+def generate_styles():
+    styles = list(get_all_styles())
+    for style in styles:
+        os.system(f'pygmentize -S {style} -f html -a .codehilite > {style}.css')
+
+
+if __name__ == '__main__':
+    generate_styles()

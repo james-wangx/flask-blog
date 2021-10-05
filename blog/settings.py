@@ -31,13 +31,7 @@ class BaseConfig:
     BLOG_POST_PER_PAGE = 10
     BLOG_MANAGE_POST_PER_PAGE = 10
     BLOG_COMMENT_PER_PAGE = 10
-    # Pulse: 列表是黑色的
-    BLOG_THEMES = ['Lux', 'Slate', 'Minty', 'Litera', 'Darkly', 'Journal', 'Sketchy', 'Superhero']
-
-    CKEDITOR_SERVE_LOCAL = True
-    CKEDITOR_ENABLE_CODESNIPPET = True
-    CKEDITOR_LANGUAGE = 'zh-cn'
-    CKEDITOR_EXTRA_PLUGINS = ['markdown']
+    BLOG_THEMES = ['Slate', 'Minty', 'Litera', 'Darkly', 'Journal', 'Sketchy', 'Superhero']
 
 
 class DevelopmentConfig(BaseConfig):

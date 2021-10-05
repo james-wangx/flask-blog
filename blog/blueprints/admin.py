@@ -4,6 +4,7 @@
 #
 from flask import Blueprint, render_template, redirect, url_for, flash, request, current_app
 from flask_login import login_required, current_user
+from markdown import markdown
 
 from blog.models import Post, Comment, Category, Link
 from blog.extensions import db
@@ -48,7 +49,12 @@ def new_post():
     form = PostForm()
     if form.validate_on_submit():
         title = form.title.data
-        body = form.body.data
+        # translate markdown to html
+        body = markdown(form.body.data, extensions=[
+            'markdown.extensions.extra',
+            'markdown.extensions.codehilite',
+            'markdown.extensions.toc',
+        ])
         category = Category.query.get(form.category.data)
         post = Post(title=title, body=body, category=category)
         # same with:
@@ -68,7 +74,11 @@ def edit_post(post_id):
     post = Post.query.get_or_404(post_id)
     if form.validate_on_submit():
         post.title = form.title.data
-        post.body = form.body.data
+        post.body = markdown(form.body.data, extensions=[
+            'markdown.extensions.extra',
+            'markdown.extensions.codehilite',
+            'markdown.extensions.toc',
+        ])
         post.category = Category.query.get(form.category.data)
         db.session.commit()
         flash('Post updated.', 'success')

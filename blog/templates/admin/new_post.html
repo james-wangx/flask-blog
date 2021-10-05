@@ -9,10 +9,3 @@
     </div>
     {{ render_form(form) }}
 {% endblock %}
-
-{% block scripts %}
-    {{ super() }}
-    {{ ckeditor.load() }}
-    {{ ckeditor.config(name='body') }}
-    {#    <script src="//cdn.ckeditor.com/4.16.2/full/ckeditor.js"></script>#}
-{% endblock %}

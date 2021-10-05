@@ -34,6 +34,11 @@ class BaseConfig:
     # Pulse: 列表是黑色的
     BLOG_THEMES = ['Lux', 'Slate', 'Minty', 'Litera', 'Darkly', 'Journal', 'Sketchy', 'Superhero']
 
+    CKEDITOR_SERVE_LOCAL = True
+    CKEDITOR_ENABLE_CODESNIPPET = True
+    CKEDITOR_LANGUAGE = 'zh-cn'
+    CKEDITOR_EXTRA_PLUGINS = ['markdown']
+
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True

@@ -126,8 +126,8 @@
                             </li>
                         {% endfor %}
                     </ul>
-                {% else %}
-                    <div class="tip"><h5>No comments.</h5></div>
+                {% elif post.can_comment %}
+                    <div class="tip"><h5>No comments yet......</h5></div>
                 {% endif %}
             </div>
             {# 评论分页 #}
@@ -147,7 +147,7 @@
                     {{ render_form(form, action=request.full_path) }}
                 </div>
             {% else %}
-                <div class="tip"><h5>Comment disabled.</h5></div>
+                <div class="tip"><h5>Comments are closed.</h5></div>
             {% endif %}
         </div>
         {# 右侧边栏 #}

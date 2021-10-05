@@ -38,6 +38,19 @@ def show_category(category_id):
     return render_template('blog/category.html', category=category, pagination=pagination, posts=posts)
 
 
+@blog_bp.route('/category/<category_name>')
+def show_category_by_name(category_name):
+    category = Category.query.filter_by(name=category_name).first()
+    if category:
+        page = request.args.get('page', 1, type=int)
+        per_page = current_app.config['BLOG_POST_PER_PAGE']
+        pagination = Post.query.with_parent(category).order_by(Post.timestamp.desc()).paginate(page, per_page)
+        posts = pagination.items
+        return render_template('blog/category.html', category=category, pagination=pagination, posts=posts)
+    else:
+        abort(404)
+
+
 @blog_bp.route('/post/<int:post_id>', methods=['GET', 'POST'])
 def show_post(post_id):
     post = Post.query.get_or_404(post_id)

@@ -54,6 +54,11 @@ def show_category(category_id):
 @blog_bp.route('/post/<int:post_id>', methods=['GET', 'POST'])
 def show_post(post_id):
     post = Post.query.get_or_404(post_id)
+    # 更新阅读数
+    post.readings = post.readings + 1
+    db.session.add(post)
+    db.session.commit()
+
     page = request.args.get('page', 1, type=int)
     per_page = current_app.config['BLOG_COMMENT_PER_PAGE']
     # 获取评论
@@ -61,6 +66,7 @@ def show_post(post_id):
         page, per_page)
     comments = pagination.items
 
+    # 区别管理员和访客的评论表单
     if current_user.is_authenticated:
         form = AdminCommentForm()
         form.author.data = current_user.name
@@ -99,6 +105,7 @@ def show_post(post_id):
             # 发邮件给管理员
             send_new_comment_email(post)
         return redirect(url_for('.show_post', post_id=post_id))
+
     return render_template('blog/post.html', post=post, pagination=pagination, form=form, comments=comments)
 
 

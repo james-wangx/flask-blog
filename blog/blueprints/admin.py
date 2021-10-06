@@ -47,6 +47,7 @@ def manage_post():
 @login_required
 def new_post():
     form = PostForm()
+
     if form.validate_on_submit():
         title = form.title.data
         # translate markdown to html
@@ -57,13 +58,11 @@ def new_post():
         ])
         category = Category.query.get(form.category.data)
         post = Post(title=title, body=body, category=category)
-        # same with:
-        # category_id = form.category.data
-        # post = Post(title=title, body=body, category_id=category_id)
         db.session.add(post)
         db.session.commit()
         flash('Post created.', 'success')
         return redirect(url_for('blog.show_post', post_id=post.id))
+
     return render_template('admin/new_post.html', form=form)
 
 

@@ -23,9 +23,22 @@ def index():
     return render_template('blog/index.html', pagination=pagination, posts=posts)
 
 
-@blog_bp.route('/about')
-def about():
-    return render_template('blog/about.html')
+@blog_bp.route('/about-me')
+def about_me():
+    post = Post.query.filter_by(title='关于我').first()
+    if post:
+        return render_template('blog/about.html', post=post)
+    else:
+        abort(404)
+
+
+@blog_bp.route('/about-site')
+def about_site():
+    post = Post.query.filter_by(title='关于本站').first()
+    if post:
+        return render_template('blog/about.html', post=post)
+    else:
+        abort(404)
 
 
 @blog_bp.route('/category/<int:category_id>')
@@ -36,19 +49,6 @@ def show_category(category_id):
     pagination = Post.query.with_parent(category).order_by(Post.timestamp.desc()).paginate(page, per_page)
     posts = pagination.items
     return render_template('blog/category.html', category=category, pagination=pagination, posts=posts)
-
-
-@blog_bp.route('/category/<category_name>')
-def show_category_by_name(category_name):
-    category = Category.query.filter_by(name=category_name).first()
-    if category:
-        page = request.args.get('page', 1, type=int)
-        per_page = current_app.config['BLOG_POST_PER_PAGE']
-        pagination = Post.query.with_parent(category).order_by(Post.timestamp.desc()).paginate(page, per_page)
-        posts = pagination.items
-        return render_template('blog/category.html', category=category, pagination=pagination, posts=posts)
-    else:
-        abort(404)
 
 
 @blog_bp.route('/post/<int:post_id>', methods=['GET', 'POST'])

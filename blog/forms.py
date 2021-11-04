@@ -47,10 +47,10 @@ class CategoryForm(FlaskForm):
 
 
 class CommentForm(FlaskForm):
-    author = StringField('Name', validators=[DataRequired(), Length(1, 30)])
-    email = StringField('Email', validators=[DataRequired(), Email(), Length(1, 254)])
-    site = StringField('Site', validators=[Optional(), URL(), Length(0, 255)])
-    body = TextAreaField('Comment', validators=[DataRequired()])
+    author = StringField('名称', validators=[DataRequired(), Length(1, 30)])
+    email = StringField('邮箱', validators=[DataRequired(), Email(), Length(1, 254)])
+    site = StringField('网站', validators=[Optional(), URL(), Length(0, 255)])
+    body = TextAreaField('评论', validators=[DataRequired()])
     submit = SubmitField()
 
 

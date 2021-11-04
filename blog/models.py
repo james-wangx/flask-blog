@@ -62,7 +62,6 @@ class Comment(db.Model):
     site = db.Column(db.String(255))
     body = db.Column(db.Text)
     from_admin = db.Column(db.Boolean, default=False)
-    reviewed = db.Column(db.Boolean, default=False)  # 评论是否过审
     timestamp = db.Column(db.DateTime, default=datetime.utcnow, index=True)
 
     replied_id = db.Column(db.Integer, db.ForeignKey('comment.id'))

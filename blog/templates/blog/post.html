@@ -136,13 +136,13 @@
             </div>
             {# 评论分页 #}
             {% if pagination.pages > 1 %}
-                <div class="page-footer">{{ render_pagination(pagination) }}</div>
+                <div class="page-footer">{{ render_pagination(pagination, fragment='#comments') }}</div>
             {% endif %}
             {# 回复评论 #}
             {% if request.args.get('reply') %}
                 <div class="alert alert-dark">
                     回复给 <strong>{{ request.args.get('author') }}</strong>:
-                    <a class="float-right" href="{{ url_for('.show_post', post_id=post.id) }}">取消</a>
+                    <a class="float-right" href="{{ url_for('.show_post', post_id=post.id) + '#comments' }}">取消</a>
                 </div>
             {% endif %}
             {# 评论表单 #}
@@ -151,7 +151,7 @@
                     {{ render_form(form, action=request.full_path) }}
                 </div>
             {% else %}
-                <div class="tip"><h5>评论已取消！</h5></div>
+                <div class="tip"><h5>评论功能已关闭！</h5></div>
             {% endif %}
         </div>
         {# 右侧边栏 #}

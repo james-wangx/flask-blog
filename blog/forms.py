@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# forms.py - 2021年 十月 03日
+# forms.py - 2021年 十一月 04日
 #
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, TextAreaField, HiddenField
@@ -36,6 +36,7 @@ class PostForm(FlaskForm):
                                  for category in Category.query.order_by(Category.name).all()]
 
 
+# noinspection PyMethodMayBeStatic
 class CategoryForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired(), Length(1, 30)])
     submit = SubmitField()

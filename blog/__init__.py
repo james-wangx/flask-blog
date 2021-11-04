@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __init__.py - 2021年 十月 01日
+# __init__.py - 2021年 十一月 04日
 #
 import os
 
@@ -18,24 +18,24 @@ from blog.settings import config
 
 
 def create_app(config_name=None):
-    if config_name == None:
+    if config_name is None:
         config_name = os.getenv('FLASK_CONFIG', 'development')
 
     app = Flask('blog')
     app.config.from_object(config[config_name])
-    register_logging(app)
+    # register_logging(app)
     register_extensions(app)
     register_blueprints(app)
-    register_commands(app)
-    register_errors(app)
     register_shell_context(app)
     register_template_context(app)
+    register_errors(app)
+    register_commands(app)
 
     return app
 
 
-def register_logging(app):
-    pass
+# def register_logging(app):
+#     pass
 
 
 def register_extensions(app):
@@ -96,9 +96,9 @@ def register_errors(app):
 def register_commands(app):
     @app.cli.command()
     @click.option('--drop', is_flag=True, help='Create after drop.')
-    def initdb(drop):
+    def init_db(drop):
         """
-        初始化数据库
+        Initialize database
         """
         if drop:
             click.confirm('This operation will delete the database, do you want to continue?', abort=True)
@@ -108,13 +108,14 @@ def register_commands(app):
         db.create_all()
         click.echo('Initialized database.')
 
+    # noinspection PyArgumentList
     @app.cli.command()
     @click.option('--username', prompt=True, help='The username used to login.')
     @click.option('--password', prompt=True, hide_input=True,
                   confirmation_prompt=True, help='The password used to login.')
-    def init(username, password):
+    def init_blog(username, password):
         """
-        初始化博客
+        Initialize blog
         """
         click.echo('Initializing the database...')
         db.create_all()

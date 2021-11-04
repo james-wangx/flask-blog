@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# models.py - 2021年 十月 03日
+# models.py - 2021/11/4
 #
 from datetime import datetime
 

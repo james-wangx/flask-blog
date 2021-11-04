@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# blog.py - 2021年 十月 01日
+# blog.py - 2021/11/4
 #
 from flask import render_template, Blueprint, request, current_app, url_for, flash, redirect, abort, make_response
 from flask_login import current_user

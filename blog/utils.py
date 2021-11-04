@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# utils.py - 2021年 十月 03日
+# utils.py - 2021/11/4
 #
 import os
 from urllib.parse import urlparse, urljoin

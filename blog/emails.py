@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# emails.py - 2021年 十一月 04日
+# emails.py - 2021/11/4
 #
 from threading import Thread
 

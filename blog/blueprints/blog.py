@@ -14,6 +14,7 @@ from blog.utils import redirect_back
 blog_bp = Blueprint('blog', __name__)
 
 
+# noinspection PyUnresolvedReferences
 @blog_bp.route('/')
 def index():
     page = request.args.get('page', 1, type=int)
@@ -41,6 +42,7 @@ def about_site():
         abort(404)
 
 
+# noinspection PyUnresolvedReferences
 @blog_bp.route('/category/<int:category_id>')
 def show_category(category_id):
     category = Category.query.get_or_404(category_id)

@@ -38,16 +38,16 @@
             <div class="col-sm-8">
                 <p class="float-left">
                     <small>
-                        Category: <a
+                        分类: <a
                             href="{{ url_for('.show_category', category_id=post.category.id) }}">{{ post.category.name }}</a>&emsp;
-                        Readings: {{ post.readings }}&emsp;
-                        Comments: <a
+                        阅读数: {{ post.readings }}&emsp;
+                        评论数: <a
                             href="{{ full_path }}#comments">{{ post.comments|length }}</a>
                     </small>
                 </p>
                 <p class="float-right">
                     <small>
-                        Date: {{ moment(post.timestamp).format('LL') }}
+                        日期: {{ moment(post.timestamp).format('LL') }}
                     </small>
                 </p>
             </div>
@@ -61,10 +61,10 @@
             <hr>
             {# 评论模块 #}
             <div class="comments" id="comments">
-                <h3>{{ comments|length }} Comments
+                <h3>{{ comments|length }} 评论
                     <small>
                         <a href="{{ url_for('.show_post', post_id=post.id, page=pagination.pages or 1) }}#comments">
-                            latest</a>
+                            最新</a>
                     </small>
                     {# 关闭/开启 评论 #}
                     {% if current_user.is_authenticated %}
@@ -95,8 +95,8 @@
                                         </a>
                                         {# 文章作者突出显示 #}
                                         {% if comment.from_admin %}
-                                            <span class="badge badge-primary">Author</span>{% endif %}
-                                        {% if comment.replied %}<span class="badge badge-light">Reply</span>{% endif %}
+                                            <span class="badge badge-primary">作者</span>{% endif %}
+                                        {% if comment.replied %}<span class="badge badge-light">回复</span>{% endif %}
                                     </h5>
                                     {# 评论时间 #}
                                     <small data-toggle="tooltip" data-placement="top" data-delay="500"
@@ -131,7 +131,7 @@
                         {% endfor %}
                     </ul>
                 {% elif post.can_comment %}
-                    <div class="tip"><h5>No comments yet......</h5></div>
+                    <div class="tip"><h5>还没有评论呢。。。</h5></div>
                 {% endif %}
             </div>
             {# 评论分页 #}
@@ -141,8 +141,8 @@
             {# 回复评论 #}
             {% if request.args.get('reply') %}
                 <div class="alert alert-dark">
-                    Reply to <strong>{{ request.args.get('author') }}</strong>:
-                    <a class="float-right" href="{{ url_for('.show_post', post_id=post.id) }}">Cancel</a>
+                    回复给 <strong>{{ request.args.get('author') }}</strong>:
+                    <a class="float-right" href="{{ url_for('.show_post', post_id=post.id) }}">取消</a>
                 </div>
             {% endif %}
             {# 评论表单 #}
@@ -151,7 +151,7 @@
                     {{ render_form(form, action=request.full_path) }}
                 </div>
             {% else %}
-                <div class="tip"><h5>Comments are closed.</h5></div>
+                <div class="tip"><h5>评论已取消！</h5></div>
             {% endif %}
         </div>
         {# 右侧边栏 #}

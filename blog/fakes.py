@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# fakes.py - 2021年 十月 03日
+# fakes.py - 2021年 十一月 04日
 # 生成虚拟数据
 import random
 
@@ -13,6 +13,7 @@ from blog.models import Admin, Category, Post, Comment, Link
 fake = Faker()
 
 
+# noinspection PyArgumentList
 def fake_admin():
     admin = Admin(
         username='admin',

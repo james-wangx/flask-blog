@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# emails.py - 2021年 十月 04日
+# emails.py - 2021年 十一月 04日
 #
 from threading import Thread
 
@@ -15,6 +15,7 @@ def _send_async_mail(app, message):
         mail.send(message)
 
 
+# noinspection PyUnresolvedReferences,PyProtectedMember
 def send_mail(subject, to, html):
     app = current_app._get_current_object()
     message = Message(subject, recipients=[to], html=html)
@@ -24,6 +25,7 @@ def send_mail(subject, to, html):
 
 
 def send_new_comment_email(post):
+    # Locate to comments
     post_url = url_for('blog.show_post', post_id=post.id, _external=True) + '#comments'
     send_mail(subject='New comment', to=current_app.config['BLOG_EMAIL'],
               html='<p>New comment in post <i>%s</i>, click the link below to check:</p>'
@@ -33,6 +35,7 @@ def send_new_comment_email(post):
 
 
 def send_new_reply_email(comment):
+    # Locate to comments
     post_url = url_for('blog.show_post', post_id=comment.post_id, _external=True) + '#comments'
     send_mail(subject='New reply', to=comment.email,
               html='<p>New reply for the comment you left in post <i>%s</i>, click the link below to check: </p>'

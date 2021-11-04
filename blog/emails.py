@@ -24,21 +24,29 @@ def send_mail(subject, to, html):
     return thr
 
 
-def send_new_comment_email(post):
+def send_new_comment_email(post, comment):
     # Locate to comments
     post_url = url_for('blog.show_post', post_id=post.id, _external=True) + '#comments'
-    send_mail(subject='New comment', to=current_app.config['BLOG_EMAIL'],
-              html='<p>New comment in post <i>%s</i>, click the link below to check:</p>'
-                   '<p><a href="%s">%s</a></P>'
-                   '<p><small style="color: #868e96">Do not reply this email.</small></p>'
-                   % (post.title, post_url, post_url))
+    send_mail(subject='新评论', to=current_app.config['BLOG_EMAIL'],
+              html=f"""
+              <p>您的文章：<b>{post.title}</b>&nbsp;有新的评论</p><hr>
+              <p>来自&nbsp;<b>{comment.author}</b>&nbsp;的评论：</p>
+              <p>{comment.body}</p><hr>
+              <p>点击以下链接查看详情：</p>
+              <p><a href="{post_url}">{post_url}</a></p>
+              <p><small style="color: #868e96">该邮件为机器发送，请勿回复。</p>
+              """)
 
 
-def send_new_reply_email(comment):
+def send_new_reply_email(post, comment):
     # Locate to comments
-    post_url = url_for('blog.show_post', post_id=comment.post_id, _external=True) + '#comments'
-    send_mail(subject='New reply', to=comment.email,
-              html='<p>New reply for the comment you left in post <i>%s</i>, click the link below to check: </p>'
-                   '<p><a href="%s">%s</a></p>'
-                   '<p><small style="color: #868e96">Do not reply this email.</small></p>'
-                   % (comment.post.title, post_url, post_url))
+    post_url = url_for('blog.show_post', post_id=post.id, _external=True) + '#comments'
+    send_mail(subject='新回复', to=comment.replied.email,
+              html=f"""
+              <p>您评论过的文章&nbsp;<b>{post.title}</b>&nbsp;有新的回复：</p><hr>
+              <p>来自&nbsp;<b>{comment.author}</b>&nbsp;的回复：</p>
+              <p>{comment.body}</p><hr>
+              <p>点击以下链接查看详情：</p>
+              <p><a href="{post_url}">{post_url}</a></p>
+              <p><small style="color: #868e96">该邮件为机器发送，请勿回复。</p>
+              """)

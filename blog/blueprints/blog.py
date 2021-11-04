@@ -14,6 +14,7 @@ from blog.utils import redirect_back
 blog_bp = Blueprint('blog', __name__)
 
 
+# noinspection PyUnresolvedReferences
 @blog_bp.route('/')
 def index():
     page = request.args.get('page', 1, type=int)
@@ -41,6 +42,7 @@ def about_site():
         abort(404)
 
 
+# noinspection PyUnresolvedReferences
 @blog_bp.route('/category/<int:category_id>')
 def show_category(category_id):
     category = Category.query.get_or_404(category_id)
@@ -62,7 +64,7 @@ def show_post(post_id):
     page = request.args.get('page', 1, type=int)
     per_page = current_app.config['BLOG_COMMENT_PER_PAGE']
     # 获取评论
-    pagination = Comment.query.with_parent(post).filter_by(reviewed=True).order_by(Comment.timestamp).paginate(
+    pagination = Comment.query.with_parent(post).order_by(Comment.timestamp).paginate(
         page, per_page)
     comments = pagination.items
 
@@ -73,11 +75,9 @@ def show_post(post_id):
         form.email.data = current_app.config['BLOG_EMAIL']
         form.site.data = url_for('.index')
         from_admin = True
-        reviewed = True
     else:
         form = CommentForm()
         from_admin = False
-        reviewed = False
 
     # 提交评论
     if form.validate_on_submit():
@@ -87,24 +87,22 @@ def show_post(post_id):
         body = form.body.data
         comment = Comment(
             author=author, email=email, site=site, body=body,
-            from_admin=from_admin, post=post, reviewed=reviewed)
+            from_admin=from_admin, post=post)
         replied_id = request.args.get('reply')
         # 判断是否是回复评论
         if replied_id:
             replied_comment = Comment.query.get_or_404(replied_id)
             comment.replied = replied_comment
             # 发邮件给被评论的人
-            send_new_reply_email(replied_comment)
+            send_new_reply_email(post, comment)
+        else:
+            # 发邮件给管理员
+            send_new_comment_email(post, comment)
+
         db.session.add(comment)
         db.session.commit()
-        # 管理员评论，无需发邮件
-        if current_user.is_authenticated:
-            flash('Comment published.', 'success')
-        else:
-            flash('Thanks, your comment will be published after reviewed.', 'info')
-            # 发邮件给管理员
-            send_new_comment_email(post)
-        return redirect(url_for('.show_post', post_id=post_id))
+        # 刷新页面并定位到评论部分
+        return redirect(url_for('.show_post', post_id=post_id) + '#comments')
 
     return render_template('blog/post.html', post=post, pagination=pagination, form=form, comments=comments)
 

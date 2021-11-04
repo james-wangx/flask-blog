@@ -30,7 +30,7 @@ class BaseConfig:
     BLOG_EMAIL = os.getenv('BLOG_EMAIL')
     BLOG_POST_PER_PAGE = 10
     BLOG_MANAGE_POST_PER_PAGE = 10
-    BLOG_COMMENT_PER_PAGE = 10
+    BLOG_COMMENT_PER_PAGE = 5
     BLOG_THEMES = ['Slate', 'Minty', 'Litera', 'Darkly', 'Journal', 'Sketchy', 'Superhero']
 
 

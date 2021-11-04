@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __init__.py - 2021年 十一月 04日
+# __init__.py - 2021/11/4
 #
 import os
 

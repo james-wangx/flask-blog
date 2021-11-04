@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# settings.py - 2021年 十一月 04日
+# settings.py - 2021/11/4
 #
 import os
 import sys

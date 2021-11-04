@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# extensions.py - 2021年 十月 03日
+# extensions.py - 2021/11/4
 #
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager

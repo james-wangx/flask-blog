@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# fakes.py - 2021年 十一月 04日
+# fakes.py - 2021/11/4
 # 生成虚拟数据
 import random
 
